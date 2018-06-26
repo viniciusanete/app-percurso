@@ -1,0 +1,58 @@
+<!--
+  Generated template for the FormQuestoesJogoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Perguntas</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form [formGroup]="formGroup" (ngSubmit)="enviarQuestao(); $event.preventDefault()">
+    <ion-item>
+      <ion-label floating>Dificuldade</ion-label>
+      <ion-select formControlName="dificuldade">
+        <ion-option *ngFor="let dificuldade of dificuldades; let i = index;" [value]="i">{{dificuldade}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Tema</ion-label>
+      <ion-select formControlName="tema">
+        <ion-option *ngFor="let tema of temas" [value]="tema.id">{{tema.nome}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Pergunta</ion-label>
+      <ion-input formControlName="enunciado" type="text"></ion-input>
+    </ion-item>
+
+    <div *ngFor="let quantidade of quantidadeResposta">
+      <ion-item>
+        <ion-label floating>Resposta da pergunta</ion-label>
+        <ion-input  formControlName="resposta" type="text"></ion-input>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>Correta</ion-label>
+          <ion-select formControlName="respostaCerta">
+            <ion-option  value=true>Sim</ion-option>
+            <ion-option  value=false>Não</ion-option>
+          </ion-select>
+        </ion-item>
+        <button ion-button  type="button" (click)="confirmarResposta()">Confirmar</button>
+      </div>
+      <button ion-button  type="button" (click)="adicionarResposta()">Resposta</button>
+
+    <!-- <button ion-button  color="primary" type="submit">Configurações</button> -->
+  </form>
+
+
+</ion-content>

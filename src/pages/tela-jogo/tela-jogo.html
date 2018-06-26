@@ -1,0 +1,92 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Gerando o jogo</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <form *ngIf="!jogoIniciou" [formGroup]="formGroup" (ngSubmit)="iniciarJogo(); $event.preventDefault()">
+
+      <ion-item>
+          <ion-label floating>Nome</ion-label>
+          <ion-input formControlName="nome" type="text"></ion-input>
+        </ion-item>
+
+    <ion-item>
+      <ion-label floating>Quantidade de Casa</ion-label>
+      <ion-input formControlName="quantidadeCasas" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Quantidade de Jogadores</ion-label>
+      <ion-input formControlName="quantidadeJogador" type="number"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Tema da Questão</ion-label>
+      <ion-select formControlName="tema">
+        <ion-option *ngFor="let tema of temas" [value]="tema.id">{{tema.nome}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <button ion-button type="submit"  [disabled]="formGroup.invalid">Iniciar Jogo</button>
+  </form>
+
+  <div *ngIf="jogoIniciou">
+    <h1 style="text-align:center;">Jogo:{{configuracaoInicialJogo?.nome}}</h1>
+    <h2 style="text-align:center;">Tema:{{configuracaoInicialJogo.tema.nome}}</h2>
+      <ion-row>
+        <table style="width: 100%; height: 25%;" border="2">
+          <tr (click)="showBonus(casa.bonus)"  *ngFor="let casa of configuracaoInicialJogo.casa" class="tr-casa" [ngClass]="{'tr-casa-bonus':casa.bonus}"
+          style="height: 80px;  color:white;font-size: 20px; text-align:center;"><h2 style="margin-top:8%;">{{casa.numero}}</h2></tr>
+          </table>
+        </ion-row>
+
+    <ion-card *ngFor="let pergunta of perguntas;" style="text-align: center">
+        <ion-card-content>
+          <ion-card-title >
+            {{pergunta.enunciado }}
+          </ion-card-title>
+              <div *ngIf="pergunta.dificuldade=='FACIL'">
+                  Dificuldade:   <ion-icon ios="ios-star" md="md-star"></ion-icon>
+              </div>
+
+              <div *ngIf="pergunta.dificuldade=='MEDIO'">
+                  Dificuldade:   <ion-icon ios="ios-star" md="md-star"></ion-icon>
+                  <ion-icon ios="ios-star" md="md-star"></ion-icon>
+              </div>
+
+
+              <div *ngIf="pergunta.dificuldade=='DIFICIL'">
+                  Dificuldade:  <ion-icon ios="ios-star" md="md-star"></ion-icon>
+                    <ion-icon ios="ios-star" md="md-star"></ion-icon>
+                    <ion-icon ios="ios-star" md="md-star"></ion-icon>
+                </div>
+
+          <ion-item text-center>
+
+            <ion-select style="margin-left:35%; " >
+              <ion-option *ngFor="let opcao of pergunta.opcoes; first as f" [value]="opcao.respostaCerta" [selected]="f">{{opcao.resposta}}</ion-option>
+            </ion-select>
+          </ion-item>
+          </ion-card-content>
+      </ion-card>
+
+      <ion-card  style="text-align: center">
+          <ion-card-content>
+            <ion-card-title >
+              Mensagens de Última casa
+            </ion-card-title>
+
+                <div *ngFor="let mensagem of mensagensUltimaCasa;">
+                   <p>{{mensagem}}</p>
+                   </div>
+            </ion-card-content>
+        </ion-card>
+
+
+  </div>
+
+</ion-content>
