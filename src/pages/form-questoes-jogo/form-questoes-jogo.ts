@@ -30,7 +30,7 @@ export class FormQuestoesJogoPage {
     public alertCtrl:AlertController
   ) {
     this.formGroup = this.formBuilder.group({
-      dificuldade: [null, [Validators.required]],
+      // dificuldade: [null, [Validators.required]],
       enunciado: [null, [Validators.required]],
       tema: [null],
       resposta: [null],
